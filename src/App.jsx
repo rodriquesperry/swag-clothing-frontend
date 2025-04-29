@@ -1,40 +1,23 @@
+import { Routes, Route } from 'react-router';
+import Navigation from './routes/navigation/Navigation';
+import Home from './routes/home/Home';
+import Signin from './routes/sign-in/Signin.component';
+
+
+
+const Shop = () => {
+	return <h1>This is the SHOP page!!!</h1>;
+};
+
 function App() {
 	return (
-		<>
-			<div className='categories-container'>
-
-				<div className='category-container'>
-					{/* <img  />*/}
-					<h2>Hats</h2>
-					<p>Shop Now</p>
-				</div>
-
-				<div className='category-container'>
-					{/* <img  />*/}
-					<h2>Jackets</h2>
-					<p>Shop Now</p>
-				</div>
-
-				<div className='category-container'>
-					{/* <img  />*/}
-					<h2>Sneakers</h2>
-					<p>Shop Now</p>
-				</div>
-
-				<div className='category-container'>
-					{/* <img  />*/}
-					<h2>Womens</h2>
-					<p>Shop Now</p>
-				</div>
-
-				<div className='category-container'>
-					{/* <img  />*/}
-					<h2>Mens</h2>
-					<p>Shop Now</p>
-				</div>
-        
-			</div>
-		</>
+		<Routes>
+			<Route path='/' element={<Navigation />}>
+				<Route index element={<Home />} />
+				<Route path='/shop' element={<Shop />} />
+				<Route path='/sign-in' element={<Signin />} />
+			</Route>
+		</Routes>
 	);
 }
 
