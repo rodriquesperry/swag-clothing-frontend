@@ -1,11 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import {
 	getAuth,
-	signInWithRedirect,
 	signInWithPopup,
 	GoogleAuthProvider,
+	createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+// Update createAuthUserWithEmailAndPassword function
+import { updateProfile } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,42 +22,64 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
+export const auth = getAuth(firebaseApp);
+auth.useDeviceLanguage();
 
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
 	prompt: 'select_account',
 });
 
-export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () =>
+	signInWithPopup(auth, googleProvider);
 
 export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth) => {
+	if (!userAuth) return;
+
 	const userDocRef = doc(db, 'users', userAuth.uid);
-  console.log(userDocRef);
 
-  const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot.exists());
+	const userSnapshot = await getDoc(userDocRef);
+	// First check if data exists
+	// if user data does not exist
+	// create / set the document with the data from userAuth in my collection
 
-  // First check if data exists
-  // if user data does not exist
-  // create / set the document with the data from userAuth in my collection 
+	if (!userSnapshot.exists()) {
+		const { displayName, email } = userAuth;
+		const createdAt = new Date();
 
-  if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
-    const createdAt = new Date();
+		try {
+			await setDoc(
+				userDocRef,
+				{
+					displayName,
+					email,
+					createdAt,
+				},
+				{ merge: true }
+			);
+		} catch (error) {
+			console.log('error creating the user:: ', error.message);
+		}
+	} else {
+		console.log('User already exists in Firestore:', userAuth.displayName);
+	}
+	return userDocRef;
+};
 
-    try {
-      await setDoc(userDocRef, {
-        displayName,
-        email,
-        createdAt
-      })
-    } catch (error) {
-      console.log('error creating the user:: ', error.message);
-      
-    }
-  }
-  return userDocRef;
+export const createAuthUserWithEmailAndPassword = async (email, password, displayName) => {
+	if (!email || !password) return;
+
+	const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+	await updateProfile(user, {
+		displayName: displayName,
+	});
+
+  user.displayName = displayName;
+
+  await createUserDocumentFromAuth({ ...user, displayName });
+
+  return user;
 };
