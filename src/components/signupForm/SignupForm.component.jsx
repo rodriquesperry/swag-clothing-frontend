@@ -34,9 +34,12 @@ const SignupForm = () => {
 				password,
 				displayName
 			);
-      createUserDocumentFromAuth(user);
-			alert(`User successfully created!`);
-			setFormFields(defaultFormFields);
+
+			if (user) {
+				 await createUserDocumentFromAuth(user);
+				alert(`User successfully created!`);
+				setFormFields(defaultFormFields);
+			}
 		} catch (error) {
 			console.error('Error creating user: ', error);
 			alert('Failed to create user. Please try again.');

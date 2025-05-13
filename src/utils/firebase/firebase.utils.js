@@ -5,11 +5,11 @@ import {
 	GoogleAuthProvider,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-  browserPopupRedirectResolver,
+	updateProfile,
+	signOut,
+	onAuthStateChanged,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-// Update createAuthUserWithEmailAndPassword function
-import { updateProfile } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,7 +26,6 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
 auth.useDeviceLanguage();
-// auth._popupRedirectResolver = browserPopupRedirectResolver;
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -91,5 +90,18 @@ export const createAuthUserWithEmailAndPassword = async (
 };
 
 export const signInUserWithEmailAndPassword = async (email, password) => {
-	return await signInWithEmailAndPassword(auth, email, password);	
+	if (!email || !password) return;
+
+	const userCredential = await signInWithEmailAndPassword(
+		auth,
+		email,
+		password
+	);
+	return userCredential;
+};
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => {
+  return onAuthStateChanged(auth, callback);
 };
