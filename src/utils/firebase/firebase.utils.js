@@ -4,6 +4,8 @@ import {
 	signInWithPopup,
 	GoogleAuthProvider,
 	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+  browserPopupRedirectResolver,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 // Update createAuthUserWithEmailAndPassword function
@@ -24,6 +26,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
 auth.useDeviceLanguage();
+auth._popupRedirectResolver = browserPopupRedirectResolver;
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -39,7 +42,6 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 	if (!userAuth) return;
 
 	const userDocRef = doc(db, 'users', userAuth.uid);
-
 	const userSnapshot = await getDoc(userDocRef);
 	// First check if data exists
 	// if user data does not exist
@@ -60,7 +62,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 				{ merge: true }
 			);
 		} catch (error) {
-			console.log('error creating the user:: ', error.message);
+			console.log('Error creating the user:: ', error.message);
 		}
 	} else {
 		console.log('User already exists in Firestore:', userAuth.displayName);
@@ -68,7 +70,11 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 	return userDocRef;
 };
 
-export const createAuthUserWithEmailAndPassword = async (email, password, displayName) => {
+export const createAuthUserWithEmailAndPassword = async (
+	email,
+	password,
+	displayName
+) => {
 	if (!email || !password) return;
 
 	const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -77,9 +83,13 @@ export const createAuthUserWithEmailAndPassword = async (email, password, displa
 		displayName: displayName,
 	});
 
-  user.displayName = displayName;
+	user.displayName = displayName;
 
-  await createUserDocumentFromAuth({ ...user, displayName });
+	await createUserDocumentFromAuth({ ...user, displayName });
 
-  return user;
+	return user;
+};
+
+export const signInUserWithEmailAndPassword = async (email, password) => {
+	return await signInWithEmailAndPassword(auth, email, password);	
 };

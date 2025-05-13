@@ -6,8 +6,11 @@ import {
 } from '../../utils/firebase/firebase.utils';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
-import SignupForm from '../../components/signup/SignupForm.component';
+import SigninForm from '../../components/signInForm/SigninForm.component';
+import SignupForm from '../../components/signupForm/SignupForm.component';
 import Button from '../../components/button/Button.component';
+
+import './sign-in.styles.scss';
 
 const Signin = () => {
 	const [redirectUser, setRedirectUser] = useState(null);
@@ -42,9 +45,8 @@ const Signin = () => {
   }
 
 	return (
-		<>
-			<h1>Signin</h1>
-			{redirectUser ? (
+		<div className='sign-in-container'>
+    {redirectUser ? (
         <>
           <p style={{ color: 'green' }}>Signed in as: {redirectUser.displayName}</p>
           <Button onClick={logOutUser} text='Sign Out' />
@@ -52,11 +54,11 @@ const Signin = () => {
       ) : (
         <>
           <p style={{ color: 'red' }}>Not signed in</p>
-          <Button onClick={logGoogleUser} text='Sign in with Google Popup' />
         </>
       )}
+			<SigninForm onClick={logGoogleUser} />
       <SignupForm  />
-		</>
+		</div>
 	);
 };
 
