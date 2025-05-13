@@ -26,7 +26,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
 auth.useDeviceLanguage();
-auth._popupRedirectResolver = browserPopupRedirectResolver;
+// auth._popupRedirectResolver = browserPopupRedirectResolver;
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({

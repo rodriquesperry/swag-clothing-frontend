@@ -10,9 +10,9 @@ import SigninForm from '../../components/signInForm/SigninForm.component';
 import SignupForm from '../../components/signupForm/SignupForm.component';
 import Button from '../../components/button/Button.component';
 
-import './sign-in.styles.scss';
+import './authentication.styles.scss';
 
-const Signin = () => {
+const Authentication = () => {
 	const [redirectUser, setRedirectUser] = useState(null);
 
 	useEffect(() => {
@@ -45,21 +45,11 @@ const Signin = () => {
   }
 
 	return (
-		<div className='sign-in-container'>
-    {redirectUser ? (
-        <>
-          <p style={{ color: 'green' }}>Signed in as: {redirectUser.displayName}</p>
-          <Button onClick={logOutUser} text='Sign Out' />
-        </>
-      ) : (
-        <>
-          <p style={{ color: 'red' }}>Not signed in</p>
-        </>
-      )}
+		<div className='authentication-container'>
 			<SigninForm onClick={logGoogleUser} />
       <SignupForm  />
 		</div>
 	);
 };
 
-export default Signin;
+export default Authentication;
