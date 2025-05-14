@@ -1,15 +1,24 @@
 import { useContext } from 'react';
 import { Outlet, Link } from 'react-router';
 
-import { signOutUser } from '../../utils/firebase/firebase.utils.js'
+import CartIcon from '../../components/cart_icon/CartIcon.component.jsx';
+import CartDropdown from '../../components/cart_dropdown/CartDropdown.component.jsx';
+
+import { signOutUser } from '../../utils/firebase/firebase.utils.js';
+
+import { UserContext } from '../../contexts/user.context';
+import { CartContext } from '../../contexts/cart.context.jsx';
 
 import CrwnLogo from '../../assets/crown.svg';
-import { UserContext } from '../../contexts/user.context';
-
 import './navigation.styles.scss';
 
 const Navigation = () => {
-	const { currentUser, setCurrentUser } = useContext(UserContext);
+	const { currentUser } = useContext(UserContext);
+  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+
+  const toggleCart = () => {
+    setIsCartOpen((prevState) => !prevState);
+  }
 
 	return (
 		<>
@@ -33,7 +42,9 @@ const Navigation = () => {
 					<li>
 						{currentUser ? (
 							<Link className='nav-link'>
-								<span className='nav-link' onClick={signOutUser}>Sign Out</span>
+								<span className='nav-link' onClick={signOutUser}>
+									Sign Out
+								</span>
 							</Link>
 						) : (
 							<Link className='nav-link' to='/auth'>
@@ -41,13 +52,10 @@ const Navigation = () => {
 							</Link>
 						)}
 					</li>
-					<li>
-						{' '}
-						<Link className='nav-link' to='/'>
-							Count
-						</Link>
-					</li>
+					<CartIcon onClick={toggleCart}/>
 				</ul>
+        {isCartOpen && <CartDropdown />}
+        
 			</nav>
 			<Outlet />
 		</>
