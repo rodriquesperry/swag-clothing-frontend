@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
 import { CartContext } from '../contexts/cart.context';
 
-const addCartItem = (cartItems, productToAdd) => {
-	const existingCartItem = cartItems.find(
-		(item) => item.id === productToAdd.id
-	);
+const existingCartItem = (cartItems, itemToAlter) => {
+  return cartItems.find((item) => item.id === itemToAlter.id);
+}
 
-	if (existingCartItem) {
+const clearCartItem = (cartItems, productToRemove) => {
+	return cartItems.filter((item) => item.id !== productToRemove.id);
+};
+
+const addCartItem = (cartItems, productToAdd) => {
+  const CartItemExists = existingCartItem(cartItems, productToAdd);
+
+	if (CartItemExists) {
 		return cartItems.map((cartItem) =>
 			cartItem.id === productToAdd.id
 				? { ...cartItem, quantity: cartItem.quantity + 1 }
@@ -18,11 +24,9 @@ const addCartItem = (cartItems, productToAdd) => {
 };
 
 const removeCartItem = (cartItems, productToRemove) => {
-	const existingCartItem = cartItems.find(
-		(item) => item.id === productToRemove.id
-	);
+  const CartItemExists = existingCartItem(cartItems, productToRemove);
 
-	if (existingCartItem.quantity === 1) {
+	if (CartItemExists.quantity === 1) {
 		return clearCartItem(cartItems, productToRemove);
 	}
 
@@ -33,10 +37,6 @@ const removeCartItem = (cartItems, productToRemove) => {
 	);
 };
 
-const clearCartItem = (cartItems, productToRemove) => {
-	return cartItems.filter((item) => item.id !== productToRemove.id);
-};
-
 export const CartProvider = ({ children }) => {
 	const [isCartOpen, setIsCartOpen] = useState(false);
 	const [cartItems, setCartItems] = useState([]);
@@ -44,7 +44,8 @@ export const CartProvider = ({ children }) => {
 	const [total, setTotal] = useState(0);
 
 	useEffect(() => {
-		// Doing the same thing as itemCount() but only using reduce method.
+		// Doing the same thing as itemCount() (located at the bottom of this file) 
+    // but only using reduce method.
 		const newCartCount = cartItems.reduce(
 			(total, cartItem) => total + cartItem.quantity,
 			0
