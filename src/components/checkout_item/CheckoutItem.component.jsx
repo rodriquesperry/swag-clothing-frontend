@@ -7,24 +7,27 @@ import './checkout_item.styles.scss';
 
 const CheckoutItem = ({ cartItem }) => {
 	const { name, imageUrl, price, quantity } = cartItem;
-	const { clearItemFromCart, removeItemFromCart, addItemToCart } = useContext(CartContext);
+	const { clearItemFromCart, removeItemFromCart, addItemToCart } =
+		useContext(CartContext);
 
-	const clearCartItem = () => clearItemFromCart(cartItem);
-  const removeCartItem = () => removeItemFromCart(cartItem);
-  const incrementCartItem = () => addItemToCart(cartItem);
+	const handleClearCartItem = () => clearItemFromCart(cartItem);
+	const handleRemoveCartItem = () => removeItemFromCart(cartItem);
+	const handleIncrementCartItem = () => addItemToCart(cartItem);
 
 	return (
 		<div className='checkout-item-container'>
-			<img src={imageUrl} alt={name} />
+			<div className='image-container'>
+				<img src={imageUrl} alt={name} />
+			</div>
 			<span className='name'>{name}</span>
 			<span className='quantity item-info'>
-				<HiMiniMinusSmall onClick={removeCartItem} />
+				<HiMiniMinusSmall onClick={handleRemoveCartItem} />
 				{quantity}
-				<HiMiniPlusSmall onClick={incrementCartItem} />
+				<HiMiniPlusSmall onClick={handleIncrementCartItem} />
 			</span>
 			<span className='price item-info'>${quantity * price}</span>
-			<span className='item-info delete' onClick={clearCartItem}>
-				x
+			<span className='item-info delete' onClick={handleClearCartItem}>
+				&#10005;
 			</span>
 		</div>
 	);

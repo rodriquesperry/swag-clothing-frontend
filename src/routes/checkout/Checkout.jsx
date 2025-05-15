@@ -5,10 +5,6 @@ import Button from '../../components/button/Button.component';
 import CheckoutItem from '../../components/checkout_item/CheckoutItem.component';
 
 import './checkout.styles.scss';
-/**
- *  - Remove button functioning
- */
-
 const Checkout = () => {
 	const { cartItems, total } = useContext(CartContext);
 
