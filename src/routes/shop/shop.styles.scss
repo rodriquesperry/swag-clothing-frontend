@@ -1,6 +1,18 @@
-.products-container {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	column-gap: 10px;
-	row-gap: 50px;
+.category-items-container {
+  margin-bottom: 50px;
+
+  h2 {
+    cursor: pointer;
+  }
+
+	.products-container {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		column-gap: 10px;
+		row-gap: 50px;
+
+		.container {
+			margin-bottom: 50px;
+		}
+	}
 }

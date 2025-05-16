@@ -4941,7 +4941,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:^7.5.3":
+"react-router-dom@npm:^7.6.0":
+  version: 7.6.0
+  resolution: "react-router-dom@npm:7.6.0"
+  dependencies:
+    react-router: "npm:7.6.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10c0/a13098a0dac97cde81f9af061c0dfb5ebf76ca00bdb75618d84b26e8abddab1fe9f3db88bce1736dc7c1a8f205ad0135a00148dd43ba72f2ed2c7e69ab77a739
+  languageName: node
+  linkType: hard
+
+"react-router@npm:7.6.0, react-router@npm:^7.5.3":
   version: 7.6.0
   resolution: "react-router@npm:7.6.0"
   dependencies:
@@ -5712,6 +5724,7 @@ __metadata:
     react-dom: "npm:^19.0.0"
     react-icons: "npm:^5.5.0"
     react-router: "npm:^7.5.3"
+    react-router-dom: "npm:^7.6.0"
     sass-embedded: "npm:^1.87.0"
     vite: "npm:^6.3.1"
   languageName: unknown
