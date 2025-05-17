@@ -10,6 +10,11 @@ export const CartContext = createContext({
 	removeItemFromCart: () => {},
 });
 
+export const CART_ACTION_TYPES = {
+	SET_IS_CART_OPEN: 'SET_IS_CART_OPEN',
+	SET_CART_ITEMS: 'SET_CART_ITEMS',
+};
+
 // Not setting setCartItems in this file is a sign of encapsulation. It prevents anyone from
 // directly changing the state that has access to the context. We declare & consume it in the
 // provider file. The way it is set up ensures that the state can only be changed in controlled ways.
