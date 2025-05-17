@@ -17,7 +17,7 @@ const Navigation = () => {
   const { isCartOpen, setIsCartOpen } = useContext(CartContext);
 
   const toggleCart = () => {
-    setIsCartOpen((prevState) => !prevState);
+    setIsCartOpen(!isCartOpen);
   }
 
 	return (

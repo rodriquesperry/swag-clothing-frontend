@@ -62,10 +62,6 @@ export const CartProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 	const { isCartOpen, cartItems, count, total } = state;
 
-	const setIsCartOpen = (isCartOpen) => {
-		dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: isCartOpen });
-	};
-
   const updateCartItemsReducer = (newCartItems) => {
     const newCartCount = newCartItems.reduce(
 			(total, cartItem) => total + cartItem.quantity,
@@ -81,6 +77,12 @@ export const CartProvider = ({ children }) => {
   }
 
   /* Mutators */
+  const setIsCartOpen = (isCartOpen) => {
+		dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: isCartOpen });
+    console.log(isCartOpen);
+    
+	};
+
   const addItemToCart = (productToAdd) => {
     const newCartItems = addCartItem(cartItems, productToAdd);
     updateCartItemsReducer(newCartItems);
