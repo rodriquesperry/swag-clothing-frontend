@@ -1,4 +1,10 @@
+/** 
+ * Use reducer if you have more than one thing to update in a state value or
+ * if your team decides to use reducer instead of useState
+ */
+
 import { useReducer } from 'react';
+import { createAction } from '../utils/reducers/reducer.utils';
 import { CartContext, CART_ACTION_TYPES } from '../contexts/cart.context';
 
 const existingCartItem = (cartItems, itemToCompare) => {
@@ -73,12 +79,12 @@ export const CartProvider = ({ children }) => {
 			0
 		);
 
-    dispatch({ type: CART_ACTION_TYPES.SET_CART_ITEMS, payload: { cartItems: newCartItems, total: newTotal, count: newCartCount }});
+    dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, { cartItems: newCartItems, total: newTotal, count: newCartCount } ));
   }
 
   /* Mutators */
   const setIsCartOpen = (isCartOpen) => {
-		dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: isCartOpen });
+		dispatch(createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, isCartOpen));
     console.log(isCartOpen);
     
 	};
