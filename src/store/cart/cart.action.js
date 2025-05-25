@@ -1,26 +1,30 @@
 import { createAction } from '../../utils/reducers/reducer.utils';
 import { CART_ACTION_TYPES } from './cart.types';
 
-export const setCartItems = (newCartItems, newCartCount, newTotal) => 
-  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, { cartItems: newCartItems, total: newTotal, count: newCartCount });
+export const setCartItems = (newCartItems, newCartCount, newTotal) =>
+	createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+		cartItems: newCartItems,
+		total: newTotal,
+		count: newCartCount,
+	});
 
 export const setIsCartOpen = (isCartOpen) =>
-  createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, isCartOpen);
+	createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, isCartOpen);
 
 export const addItemToCart = (cartItems, productToAdd, dispatch) => {
-    const newCartItems = addCartItem(cartItems, productToAdd);
-    updateCartItemsReducer(newCartItems, dispatch);
-  }
+	const newCartItems = addCartItem(cartItems, productToAdd);
+	dispatchCartUpdate(newCartItems, dispatch);
+};
 
-  export const removeItemFromCart = (cartItems, productToRemove, dispatch) => {
-    const newCartItems = removeCartItem(cartItems, productToRemove);
-    updateCartItemsReducer(newCartItems, dispatch);
-  }
+export const removeItemFromCart = (cartItems, productToRemove, dispatch) => {
+	const newCartItems = removeCartItem(cartItems, productToRemove);
+	dispatchCartUpdate(newCartItems, dispatch);
+};
 
-  export const clearItemFromCart = (cartItems, productToRemove, dispatch) => {
-    const newCartItems = clearCartItem(cartItems, productToRemove);
-    updateCartItemsReducer(newCartItems, dispatch);
-  }
+export const clearItemFromCart = (cartItems, productToRemove, dispatch) => {
+	const newCartItems = clearCartItem(cartItems, productToRemove);
+	dispatchCartUpdate(newCartItems, dispatch);
+};
 
 const isExistingCartItem = (cartItems, itemToCompare) => {
 	return cartItems.find((item) => item.id === itemToCompare.id);
@@ -58,16 +62,22 @@ const removeCartItem = (cartItems, productToRemove) => {
 	);
 };
 
-const updateCartItemsReducer = (newCartItems, dispatch) => {
-    const newCartCount = newCartItems.reduce(
-			(total, cartItem) => total + cartItem.quantity,
-			0
-		);
+const dispatchCartUpdate = (newCartItems, dispatch) => {
+	const newCartCount = newCartItems.reduce(
+		(total, cartItem) => total + cartItem.quantity,
+		0
+	);
 
-    const newTotal = newCartItems.reduce(
-			(total, cartItem) => total + cartItem.price * cartItem.quantity,
-			0
-		);
+	const newTotal = newCartItems.reduce(
+		(total, cartItem) => total + cartItem.price * cartItem.quantity,
+		0
+	);
 
-    dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, { cartItems: newCartItems, total: newTotal, count: newCartCount } ));
-  }
+	dispatch(
+		createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+			cartItems: newCartItems,
+			total: newTotal,
+			count: newCartCount,
+		})
+	);
+};

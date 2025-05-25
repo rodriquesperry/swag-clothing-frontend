@@ -27,8 +27,3 @@ export const selectAddCartItem = createSelector([selectCartReducer], (cart) => {
   console.log('fired selectAddCartItem');
   return cart.quantity;
 })
-
-export const selectClearCartItem = createSelector([selectCartReducer], (cart) => {
-  console.log('fired selectClearCartItem');
-  
-})
