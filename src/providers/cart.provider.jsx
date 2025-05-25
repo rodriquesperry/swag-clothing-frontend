@@ -1,20 +1,19 @@
 /** 
- * Use reducer if you have more than one thing to update in a state value or
- * if your team decides to use reducer instead of useState
+ * Use useReducer if you have more than one thing to update in a state value or
+ * if your team decides to use useReducer instead of useState
  */
-
 import { useReducer } from 'react';
 import { createAction } from '../utils/reducers/reducer.utils';
-import { CartContext, CART_ACTION_TYPES } from '../contexts/cart.context';
+import { CartContext } from '../contexts/cart.context';
 
-const existingCartItem = (cartItems, itemToCompare) => {
+const isExistingCartItem = (cartItems, itemToCompare) => {
 	return cartItems.find((item) => item.id === itemToCompare.id);
 };
 
 const addCartItem = (cartItems, productToAdd) => {
-	const CartItemExists = existingCartItem(cartItems, productToAdd);
+	const existingCartItem = isExistingCartItem(cartItems, productToAdd);
 
-	if (CartItemExists) {
+	if (existingCartItem) {
 		return cartItems.map((cartItem) =>
 			cartItem.id === productToAdd.id
 				? { ...cartItem, quantity: cartItem.quantity + 1 }
@@ -26,9 +25,9 @@ const addCartItem = (cartItems, productToAdd) => {
 };
 
 const removeCartItem = (cartItems, productToRemove) => {
-	const CartItemExists = existingCartItem(cartItems, productToRemove);
+	const existingCartItem = isExistingCartItem(cartItems, productToRemove);
 
-	if (CartItemExists.quantity === 1) {
+	if (existingCartItem.quantity === 1) {
 		return clearCartItem(cartItems, productToRemove);
 	}
 
