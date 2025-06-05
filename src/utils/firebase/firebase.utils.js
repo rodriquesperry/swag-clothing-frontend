@@ -67,14 +67,14 @@ export const addCollectionAndDocuments = async (
 
 export const getCategoriesAndDocuments = async () => {
 	const collectionRef = collection(db, 'categories');
-  // Generate the query off of the collectionRef
-  const q = query(collectionRef);
-  const querySnapshot = await getDocs(q);
+	// Generate the query off of the collectionRef
+	const q = query(collectionRef);
+	const querySnapshot = await getDocs(q);
 
-  return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+	return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalDetails = {}) => {
 	if (!userAuth) return;
 
 	const userDocRef = doc(db, 'users', userAuth.uid);
@@ -83,9 +83,19 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 	// if user data does not exist
 	// create / set the document with the data from userAuth in my collection
 
+  console.log('additionalDetails::', additionalDetails);
+  
+  
+  const displayName = additionalDetails.displayName || userAuth.displayName;
+  
 	if (!userSnapshot.exists()) {
-		const { displayName, email } = userAuth;
+    const { email } = userAuth;
 		const createdAt = new Date();
+    
+    console.log('additionalDetails.displayName::', additionalDetails.displayName);
+    if (!displayName) {
+			throw new Error('Missing displayName. Cannot create document with undefined value.');
+		}
 
 		try {
 			await setDoc(
@@ -98,12 +108,12 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 				{ merge: true }
 			);
 		} catch (error) {
-			console.log('Error creating the user:: ', error.message);
+			console.log('Error creating the user: ', error.message);
 		}
 	} else {
 		console.log('User already exists in Firestore:', userAuth.displayName);
 	}
-	return userDocRef;
+	return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (
@@ -120,10 +130,7 @@ export const createAuthUserWithEmailAndPassword = async (
 	});
 
 	user.displayName = displayName;
-
-	await createUserDocumentFromAuth({ ...user, displayName });
-
-	return user;
+	return { user };
 };
 
 export const signInUserWithEmailAndPassword = async (email, password) => {
@@ -141,4 +148,17 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => {
 	return onAuthStateChanged(auth, callback);
+};
+
+export const getCurrentUser = () => {
+	return new Promise((resolve, reject) => {
+		const unsubscribe = onAuthStateChanged(
+			auth,
+			(userAuth) => {
+				unsubscribe();
+				resolve(userAuth);
+			},
+			reject
+		);
+	});
 };
