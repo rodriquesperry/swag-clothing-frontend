@@ -16,20 +16,20 @@ export const userReducer = (state = INITIAL_STATE, action) => {
 				currentUser: payload,
 			};
 
+		case USER_ACTION_TYPES.SIGN_OUT_SUCCESS:
+			return {
+				...state,
+				currentUser: null,
+			};
+
 		case USER_ACTION_TYPES.SIGN_IN_FAILED:
+		case USER_ACTION_TYPES.SIGN_Up_FAILED:
+		case USER_ACTION_TYPES.SIGN_OUT_FAILED:
 			return {
 				...state,
 				error: payload,
 			};
 
-		// case USER_ACTION_TYPES.GOOGLE_SIGN_IN_START:
-		//   return {
-		//     ...state,
-		//     currentUser: payload,
-		//   }
-		// default returns state only if the action type is not called. Remember every single
-		// reducers recieves every single action in Redux, so instead of throwing an error when
-		// the type doesn't match, we return the current state.
 		default:
 			return state;
 	}

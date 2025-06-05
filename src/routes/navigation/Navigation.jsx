@@ -6,9 +6,12 @@ import CartDropdown from '../../components/cart_dropdown/CartDropdown.component.
 
 // import { CartContext } from '../../contexts/cart.context.jsx';
 import { selectCurrentUser } from '../../store/user/user.selector.js';
-import { signOutUser } from '../../utils/firebase/firebase.utils.js';
+import { signOutStart } from '../../store/user/user.action.js';
+
 import { selectIsCartOpen } from '../../store/cart/cart.selector.js';
 import { setIsCartOpen } from '../../store/cart/cart.action.js';
+
+// import { signOutUser } from '../../utils/firebase/firebase.utils.js';
 
 import CrwnLogo from '../../assets/crown.svg';
 import './navigation.styles.scss';
@@ -22,9 +25,7 @@ const Navigation = () => {
 		dispatch(setIsCartOpen(!isCartOpen));
 	};
 
-
-  console.log('isCartOpen:: ', isCartOpen);
-  
+  const signUserOut = () => dispatch(signOutStart()); 
 
 	return (
 		<>
@@ -48,7 +49,7 @@ const Navigation = () => {
 					<li>
 						{currentUser ? (
 							<Link className='nav-link'>
-								<span className='nav-link' onClick={signOutUser}>
+								<span className='nav-link' onClick={signUserOut}>
 									Sign Out
 								</span>
 							</Link>
