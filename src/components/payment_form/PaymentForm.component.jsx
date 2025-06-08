@@ -14,6 +14,9 @@ const PaymentForm = () => {
 	const stripe = useStripe();
 	const elements = useElements();
 
+  console.log({ stripe, elements });
+
+
 	const amount = useSelector(selectCartTotal);
 	const currentUser = useSelector(selectCurrentUser);
 

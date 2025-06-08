@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 	// Set CORS headers
 	const allowedOrigins = [
 		'http://localhost:5173',
-		'https://your-app.vercel.app',
+		'https://swag-clothing.vercel.app',
 	];
 	const origin = req.headers.origin;
 
