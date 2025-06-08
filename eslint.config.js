@@ -30,4 +30,13 @@ export default [
       ],
     },
   },
+  // ✅ Override: Node.js backend files (e.g., Vercel serverless functions)
+  {
+    files: ['api/**/*.{js,jsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 ]

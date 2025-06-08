@@ -12,6 +12,7 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.3.1",
+    "dotenv": "^16.5.0",
     "firebase": "^11.6.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -24,7 +25,9 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.3.0",
     "redux-thunk": "^3.1.0",
-    "reselect": "^5.1.1"
+    "reselect": "^5.1.1",
+    "stripe": "^18.2.1",
+    "vercel": "^42.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
