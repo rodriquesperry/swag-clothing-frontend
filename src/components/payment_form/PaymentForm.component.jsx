@@ -69,10 +69,10 @@ const PaymentForm = () => {
 			<form onSubmit={paymentHandler} className='form-container'>
 				<h2>Credit Card Payment:</h2>
 				<CardElement />
-				<Button
+				{/* <Button
 					children={'Pay Now'}
 					buttonType={BUTTON_TYPE_CLASSES.inverted}
-				/>
+				/> */}
 			</form>
 		</div>
 	);
