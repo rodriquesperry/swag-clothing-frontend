@@ -44,6 +44,7 @@ export default async function handler(req, res) {
 				});
 			}
 		}
+    
 		const paymentIntent = await stripe.paymentIntents.create({
 			amount,
 			currency: 'usd',

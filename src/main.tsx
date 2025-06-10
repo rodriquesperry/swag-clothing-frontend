@@ -11,7 +11,13 @@ import { stripePromise } from './utils/stripe/stripe.utils.js';
 import App from './App.jsx';
 import './index.scss';
 
-createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+	throw new Error("Root element not found. Make sure there's a div with id='root' in your index.html");
+}
+
+createRoot(rootElement).render(
 	<StrictMode>
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>

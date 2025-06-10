@@ -12,20 +12,29 @@ import Spinner from '../../components/spinner/Spinner.component';
 
 import './category.styles.scss';
 
+export type Category = {
+  id: string,
+  imageUrl: string,
+  name: string,
+  price: number
+}
+
 const Category = () => {
 	const { category } = useParams();
 	const categoriesMap = useSelector(selectCategoriesMap);
 	const isLoading = useSelector(selectIsCategoriesLoading);
-	const [products, setProducts] = useState(categoriesMap[category]);
+	const [products, setProducts] = useState<Category[]>([]);
 
 	useEffect(() => {
 		console.log('effect fired calling setProducts');
-		setProducts(categoriesMap[category]);
+    if (category && categoriesMap[category]) {
+      setProducts(categoriesMap[category]);
+    }
 	}, [category, categoriesMap]);
 
 	return (
 		<>
-			<h2 className='category-title'>{category.toUpperCase()}</h2>
+			<h2 className='category-title'>{category?.toUpperCase()}</h2>
 			{isLoading ? (
 				<Spinner />
 			) : (

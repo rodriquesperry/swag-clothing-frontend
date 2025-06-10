@@ -26,6 +26,10 @@ export const clearItemFromCart = (cartItems, productToRemove, dispatch) => {
 	dispatchCartUpdate(newCartItems, dispatch);
 };
 
+export const clearCartItems = (dispatch) => {
+	dispatch(createAction(CART_ACTION_TYPES.CLEAR_CART_ITEMS));
+};
+
 const isExistingCartItem = (cartItems, itemToCompare) => {
 	return cartItems.find((item) => item.id === itemToCompare.id);
 };
