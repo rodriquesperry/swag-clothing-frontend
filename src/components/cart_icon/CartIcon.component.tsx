@@ -3,10 +3,13 @@ import { selectCartCount } from '../../store/cart/cart.selector';
 
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import './cart_icon.styles.scss';
+import { MouseEventHandler } from 'react';
 
+type CartIconProps = {
+  onClick: MouseEventHandler<HTMLDivElement>;
+}
 
-
-const CartIcon = ({ onClick }) => {
+const CartIcon = ({ onClick }: CartIconProps) => {
   const count = useSelector(selectCartCount);
 
   return (

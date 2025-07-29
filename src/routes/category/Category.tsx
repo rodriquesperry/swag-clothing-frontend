@@ -12,18 +12,11 @@ import Spinner from '../../components/spinner/Spinner.component';
 
 import './category.styles.scss';
 
-export type Category = {
-  id: string,
-  imageUrl: string,
-  name: string,
-  price: number
-}
-
 const Category = () => {
 	const { category } = useParams();
 	const categoriesMap = useSelector(selectCategoriesMap);
 	const isLoading = useSelector(selectIsCategoriesLoading);
-	const [products, setProducts] = useState<Category[]>([]);
+	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
 		console.log('effect fired calling setProducts');

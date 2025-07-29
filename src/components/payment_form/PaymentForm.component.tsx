@@ -10,6 +10,7 @@ import Button from '../button/Button.component';
 import { BUTTON_TYPE_CLASSES } from '../button/button.types';
 
 import './payment_form.styles.scss';
+import { FormEvent } from 'react';
 
 const PaymentForm = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const PaymentForm = () => {
 
 	// const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-	const paymentHandler = async (e) => {
+	const paymentHandler = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 
 		if (!stripe || !elements) return;

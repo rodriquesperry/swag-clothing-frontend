@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router';
 import './directory_item.styles.scss';
 
+export type DirectoryItemProps = {
+  imageUrl: string;
+  title: string;
+}
 
-const DirectoryItem = ({ imageUrl, title }) => {
+
+const DirectoryItem = ({ imageUrl, title }: DirectoryItemProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/shop/${title.toLowerCase()}`);

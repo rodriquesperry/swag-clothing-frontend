@@ -4,9 +4,15 @@ import { clearItemFromCart, removeItemFromCart, addItemToCart } from '../../stor
 import { HiMiniMinusSmall } from 'react-icons/hi2';
 import { HiMiniPlusSmall } from 'react-icons/hi2';
 
+import { CartItem } from '../../routes/checkout/Checkout';
+
 import './checkout_item.styles.scss';
 
-const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+  cartItem: CartItem;
+}
+
+const CheckoutItem = ({ cartItem }: CheckoutItemProps) => {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);  
 	

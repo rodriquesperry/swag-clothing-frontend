@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormInput from '../form_input/FormInput.component';
@@ -9,6 +9,7 @@ import {
 	emailSignInStart,
 } from '../../store/user/user.action';
 import './signin_form.styles.scss';
+import { BUTTON_TYPE_CLASSES } from '../button/button.types';
 
 // Set default state values
 const defaultFormFields = {
@@ -21,7 +22,7 @@ const SigninForm = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const { email, password } = formFields;
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 		try {
 			dispatch(emailSignInStart(email, password));
@@ -35,7 +36,7 @@ const SigninForm = () => {
 		dispatch(googleSignInStart());
 	};
 
-	const handleChange = (e) => {
+	const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = e.target;
 		setFormFields({ ...formFields, [name]: value });
 	};
@@ -65,7 +66,7 @@ const SigninForm = () => {
 				/>
 
 				<div className='signin-form-buttons'>
-					<Button type='submit'>Sign In</Button>
+					<Button buttonType={BUTTON_TYPE_CLASSES.default} type='submit'>Sign In</Button>
 					<Button type='button' onClick={logGoogleUser} buttonType='google'>
 						Google Sign In
 					</Button>

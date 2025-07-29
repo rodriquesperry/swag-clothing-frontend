@@ -4,13 +4,25 @@ import { selectCartItems, selectCartTotal } from '../../store/cart/cart.selector
 import CheckoutItem from '../../components/checkout_item/CheckoutItem.component';
 import PaymentForm from '../../components/payment_form/PaymentForm.component';
 
+
 import './checkout.styles.scss';
+
+export type CartItem = {
+  id: string;
+  title: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+}
 
 const Checkout = () => {
 	const cartItems = useSelector(selectCartItems);
   const total = useSelector(selectCartTotal);
 
-	return (
+	console.log('cartItems::', cartItems);
+  
+  
+  return (
 		<div className='checkout-container'>
 			<div>
 				<div className='checkout-header'>
@@ -23,7 +35,7 @@ const Checkout = () => {
 				<hr />
 				{cartItems.length > 0 ? (
 					<div className='checkout-items'>
-						{cartItems.map((item) => (
+						{cartItems.map((item: CartItem) => (
 							<div key={item.id}>
 								<CheckoutItem cartItem={item} />
 								<hr />

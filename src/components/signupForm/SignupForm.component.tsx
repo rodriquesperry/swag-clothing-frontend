@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormInput from '../form_input/FormInput.component';
@@ -6,6 +6,7 @@ import Button from '../button/Button.component';
 
 import { signUpStart } from '../../store/user/user.action';
 import './signup_form.styles.scss';
+import { BUTTON_TYPE_CLASSES } from '../button/button.types';
 
 // Set default state values
 const defaultFormFields = {
@@ -20,7 +21,7 @@ const SignupForm = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const { displayName, email, password, confirmPassword } = formFields;
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 
 		if (password !== confirmPassword) {
@@ -40,7 +41,7 @@ const SignupForm = () => {
 		}
 	};
 
-	const handleChange = (e) => {
+	const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = e.target;
 		setFormFields({ ...formFields, [name]: value });
 	};
@@ -85,7 +86,7 @@ const SignupForm = () => {
 					name='confirmPassword'
 					value={confirmPassword}
 				/>
-				<Button type='submit'>Sign Up</Button>
+				<Button buttonType={BUTTON_TYPE_CLASSES.default} type='submit' children={'Sign Up'} />
 			</form>
 		</div>
 	);
